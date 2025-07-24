@@ -5,9 +5,21 @@ which means I sometimes need to switch to PowerShell and all my muscle memory go
 so I vibecoded myself (thanks https://www.warp.dev/ :D) aliases for common unix functions  
 I added some additional aliases based on my .bashrc and magic happened. It actually works!
 this file is ugly as hell, but it gets the job done, so hey. why not just use it? :D  
-hopefully this will be of use to someone else as well!  
+hopefully this will be of use to someone else as well! 
 
-# everything apart from the human description has been vibecooded. use at your own risk
+## connected media
+
+### Screenshot:
+<img width="643" height="938" alt="image" src="https://github.com/user-attachments/assets/bc97c2e3-23b8-4778-baef-dca55246e2dc" />
+
+### Video:
+[![Video](https://img.youtube.com/vi/oFFrGepxO2k/0.jpg)](https://www.youtube.com/watch?v=oFFrGepxO2k)
+
+### LinkedIn Post:
+https://www.linkedin.com/posts/radoslaw-domanski_powershell-developing-windows-activity-7354286577361027072-TVFL
+
+# everything apart from the human description has been vibecooded.
+use at your own risk
 
 # PowerShell Aliases with Beautiful Color-Coded Categorization
 
