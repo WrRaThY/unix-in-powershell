@@ -1,7 +1,36 @@
-# PowerShell Aliases with Beautiful Color-Coded Categorization System
+# Human description
+
+# Normally, I use gitbash+zsh as a terminal on windows, but... some tools don't play well with it
+# which means I sometimes need to switch to PowerShell and all my muscle memory goes to hell
+# so I vibecoded myself (thanks https://www.warp.dev/ :D) aliases for common unix functions
+# I added some additional aliases based on my .bashrc and that's it.
+# this file is ugly as hell, but it gets the job done, so hey. why not just use it? :D
+# hopefully this will be of use to someone else as well!
+
+# everything below this point is vibecoded
+
+# PowerShell Aliases - Custom Functions and Aliases
+# This file contains custom aliases and their automatic categorization system
 # Equivalent to .bash_aliases in Unix systems
 
-# This file contains custom aliases and their automatic categorization system
+# ========== REMOVE CONFLICTING BUILT-IN ALIASES ==========
+# Automatically remove built-in PowerShell aliases that conflict with our custom functions
+$aliasesFilePath = $PSCommandPath
+if (-not $aliasesFilePath) {
+    $aliasesFilePath = Join-Path $PSScriptRoot "aliases.ps1"
+}
+
+if (Test-Path $aliasesFilePath) {
+    $aliasesContent = Get-Content $aliasesFilePath -Raw
+    $functionMatches = [regex]::Matches($aliasesContent, 'function\s+([a-zA-Z_][a-zA-Z0-9_]*)\s*\{')
+    $customFunctionNames = $functionMatches | ForEach-Object { $_.Groups[1].Value }
+    
+    foreach ($functionName in $customFunctionNames) {
+        if (Get-Alias $functionName -ErrorAction SilentlyContinue) {
+            Remove-Item "alias:$functionName" -Force -ErrorAction SilentlyContinue
+        }
+    }
+}
 
 # ========== CUSTOM ALIASES ==========
 # Add your custom functions/aliases below this line
@@ -21,10 +50,10 @@ Register-ArgumentCompleter -CommandName docker -ScriptBlock {
 function work { Set-Location "C:\_work" }
 
 # [Category: Dev Tools]
-function dcu { docker compose up -d }
+function dcu { docker compose up -d @args }
 
 # [Category: Dev Tools]
-function dcd { docker compose down }
+function dcd { docker compose down @args }
 
 # [Category: Dev Tools]
 function s { serverless @args }
@@ -34,9 +63,9 @@ function tf { terraform @args }
 # [Category: Dev Tools]
 function tg { terragrunt @args }
 # [Category: Dev Tools]
-function tfa { terraform apply -auto-approve }
+function tfa { terraform apply -auto-approve @args }
 # [Category: Dev Tools]
-function tfp { terraform plan }
+function tfp { terraform plan @args }
 
 # [Category: Dev Tools]
 function got { git @args }
@@ -44,11 +73,11 @@ function got { git @args }
 function gut { git @args }
 
 # [Category: Dev Tools]
-function gitpush { git push }
+function gitpush { git push @args }
 # [Category: Dev Tools]
-function gp { gitpush }
+function gp { gitpush @args }
 # [Category: Dev Tools]
-function gl { git pull }
+function gl { git pull @args }
 
 # [Category: Dev Tools]
 function g {
@@ -62,7 +91,8 @@ function p {
 
 # [Category: File Operations]
 function ll {
-    Get-ChildItem -Force | Format-Table -AutoSize
+    param([string]$Path = ".")
+    Get-ChildItem -Path $Path -Force | Format-Table -AutoSize
 }
 
 # [Category: Utilities]
